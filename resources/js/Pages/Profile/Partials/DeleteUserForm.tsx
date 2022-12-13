@@ -1,15 +1,17 @@
-import { useRef, useState } from 'react';
-import DangerButton from '@/Components/DangerButton';
+import React, {FormEvent, useRef, useState} from 'react';
 import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
 import Modal from '@/Components/Modal';
-import SecondaryButton from '@/Components/SecondaryButton';
-import TextInput from '@/Components/TextInput';
 import { useForm } from '@inertiajs/inertia-react';
+import {Button, Input} from "@material-tailwind/react";
+import route from "ziggy-js";
 
-export default function DeleteUserForm({ className }) {
+interface IDeleteUserForm {
+    className: string
+}
+
+export default function DeleteUserForm({ className }:IDeleteUserForm) {
     const [confirmingUserDeletion, setConfirmingUserDeletion] = useState(false);
-    const passwordInput = useRef();
+    const passwordInput = useRef<HTMLInputElement>(null);
 
     const {
         data,
@@ -26,13 +28,13 @@ export default function DeleteUserForm({ className }) {
         setConfirmingUserDeletion(true);
     };
 
-    const deleteUser = (e) => {
+    const deleteUser = (e: FormEvent) => {
         e.preventDefault();
 
         destroy(route('profile.destroy'), {
             preserveScroll: true,
             onSuccess: () => closeModal(),
-            onError: () => passwordInput.current.focus(),
+            onError: () => passwordInput.current?.focus(),
             onFinish: () => reset(),
         });
     };
@@ -54,7 +56,7 @@ export default function DeleteUserForm({ className }) {
                 </p>
             </header>
 
-            <DangerButton onClick={confirmUserDeletion}>Delete Account</DangerButton>
+            <Button onClick={confirmUserDeletion} size="sm" type="submit" color="red" disabled={processing}>Delete Account</Button>
 
             <Modal show={confirmingUserDeletion} onClose={closeModal}>
                 <form onSubmit={deleteUser} className="p-6">
@@ -68,29 +70,22 @@ export default function DeleteUserForm({ className }) {
                     </p>
 
                     <div className="mt-6">
-                        <InputLabel for="password" value="Password" className="sr-only" />
 
-                        <TextInput
-                            id="password"
-                            type="password"
-                            name="password"
-                            ref={passwordInput}
-                            value={data.password}
-                            handleChange={(e) => setData('password', e.target.value)}
-                            className="mt-1 block w-3/4"
-                            isFocused
-                            placeholder="Password"
+                        <Input label="Password"
+                               type="password"
+                               name="password"
+                               value={data.password}
+                               ref={passwordInput}
+                               autoComplete="current-password"
+                               onChange={(e) => setData('password', e.target.value)}
                         />
-
                         <InputError message={errors.password} className="mt-2" />
                     </div>
 
                     <div className="mt-6 flex justify-end">
-                        <SecondaryButton onClick={closeModal}>Cancel</SecondaryButton>
+                        <Button onClick={closeModal} size="sm" variant="outlined" type="submit" color="gray">Cancel</Button>
 
-                        <DangerButton className="ml-3" processing={processing}>
-                            Delete Account
-                        </DangerButton>
+                        <Button className="ml-3" onClick={confirmUserDeletion} size="sm" type="submit" color="red" disabled={processing}>Delete Account</Button>
                     </div>
                 </form>
             </Modal>

@@ -1,11 +1,10 @@
-import {ChangeEvent, FormEvent, SyntheticEvent, useEffect} from 'react';
+import {ChangeEvent, FormEvent, useEffect} from 'react';
 import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/inertia-react';
 import React from 'react';
+import {Button, Input} from "@material-tailwind/react";
+import route from "ziggy-js";
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -21,7 +20,7 @@ export default function Register() {
         };
     }, []);
 
-    const onHandleChange = (event: FormEvent):void => {
+    const onHandleChange = (event: ChangeEvent<HTMLInputElement>):void => {
         setData(event.target.name, event.target.type === 'checkbox' ? event.target.checked : event.target.value);
     };
 
@@ -37,67 +36,54 @@ export default function Register() {
 
             <form onSubmit={submit}>
                 <div>
-                    <InputLabel forInput="name" value="Name" />
 
-                    <TextInput
-                        id="name"
-                        name="name"
-                        value={data.name}
-                        className="mt-1 block w-full"
-                        autoComplete="name"
-                        isFocused={true}
-                        handleChange={onHandleChange}
-                        required
+                    <Input label={"Name"}
+                           onChange={onHandleChange}
+                           name="name"
+                           value={data.name}
+                           type='text'
+                           autoComplete='name'
+                           required={true}
                     />
 
                     <InputError message={errors.name} className="mt-2" />
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel forInput="email" value="Email" />
 
-                    <TextInput
-                        id="email"
-                        type="email"
-                        name="email"
-                        value={data.email}
-                        className="mt-1 block w-full"
-                        autoComplete="username"
-                        handleChange={onHandleChange}
-                        required
+                    <Input label={"Email"}
+                           onChange={onHandleChange}
+                           name="email"
+                           value={data.email}
+                           type='email'
+                           autoComplete='email'
                     />
+
 
                     <InputError message={errors.email} className="mt-2" />
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel forInput="password" value="Password" />
-
-                    <TextInput
-                        id="password"
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        className="mt-1 block w-full"
-                        autoComplete="new-password"
-                        handleChange={onHandleChange}
-                        required
+                    <Input label="Password"
+                           type="password"
+                           name="password"
+                           value={data.password}
+                           autoComplete="current-password"
+                           onChange={onHandleChange}
                     />
 
                     <InputError message={errors.password} className="mt-2" />
                 </div>
 
                 <div className="mt-4">
-                    <InputLabel forInput="password_confirmation" value="Confirm Password" />
 
-                    <TextInput
-                        id="password_confirmation"
-                        type="password"
-                        name="password_confirmation"
-                        value={data.password_confirmation}
-                        className="mt-1 block w-full"
-                        handleChange={onHandleChange}
-                        required
+
+                    <Input label="Confirm Password"
+                           type="password"
+                           name="password_confirmation"
+                           value={data.password_confirmation}
+                           onChange={onHandleChange}
+                           required={true}
                     />
 
                     <InputError message={errors.password_confirmation} className="mt-2" />
@@ -111,9 +97,8 @@ export default function Register() {
                         Already registered?
                     </Link>
 
-                    <PrimaryButton className="ml-4" processing={processing}>
-                        Register
-                    </PrimaryButton>
+                    <Button className="ml-4" type="submit" disabled={processing}>Register</Button>
+
                 </div>
             </form>
         </GuestLayout>

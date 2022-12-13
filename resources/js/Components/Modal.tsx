@@ -1,7 +1,14 @@
-import { Fragment } from 'react';
+import React, {FC, Fragment, PropsWithChildren} from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 
-export default function Modal({ children, show = false, maxWidth = '2xl', closeable = true, onClose = () => {} }) {
+interface IModal extends PropsWithChildren{
+    show: boolean
+    maxWidth: string
+    closeable: boolean
+    onClose: () => void
+}
+
+const Modal= ({ children, show = false, maxWidth = '2xl', closeable = true, onClose = () => {} }: IModal) => {
     const close = () => {
         if (closeable) {
             onClose();
@@ -55,3 +62,5 @@ export default function Modal({ children, show = false, maxWidth = '2xl', closea
         </Transition>
     );
 }
+
+export default Modal;

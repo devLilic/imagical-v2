@@ -1,9 +1,13 @@
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
-import TextInput from '@/Components/TextInput';
 import { Link, useForm, usePage } from '@inertiajs/inertia-react';
 import { Transition } from '@headlessui/react';
+import route from "ziggy-js";
+import React, {FormEvent} from "react";
+import {Button, Input} from "@material-tailwind/react";
+
+
 
 export default function UpdateProfileInformation({ mustVerifyEmail, status, className }) {
     const user = usePage().props.auth.user;
@@ -13,7 +17,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
         email: user.email,
     });
 
-    const submit = (e) => {
+    const submit = (e: FormEvent) => {
         e.preventDefault();
 
         patch(route('profile.update'));
@@ -31,32 +35,26 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
 
             <form onSubmit={submit} className="mt-6 space-y-6">
                 <div>
-                    <InputLabel for="name" value="Name" />
-
-                    <TextInput
-                        id="name"
-                        className="mt-1 block w-full"
-                        value={data.name}
-                        handleChange={(e) => setData('name', e.target.value)}
-                        required
-                        autofocus
-                        autocomplete="name"
+                    <Input label={"Name"}
+                           onChange={(e) => setData('name', e.target.value)}
+                           name="name"
+                           value={data.name}
+                           type='text'
+                           autoComplete='name'
+                           required={true}
                     />
 
                     <InputError className="mt-2" message={errors.name} />
                 </div>
 
                 <div>
-                    <InputLabel for="email" value="Email" />
-
-                    <TextInput
-                        id="email"
-                        type="email"
-                        className="mt-1 block w-full"
-                        value={data.email}
-                        handleChange={(e) => setData('email', e.target.value)}
-                        required
-                        autocomplete="email"
+                    <Input label={"Email"}
+                           onChange={(e) => setData('email', e.target.value)}
+                           name="email"
+                           value={data.email}
+                           type='email'
+                           autoComplete='email'
+                           required={true}
                     />
 
                     <InputError className="mt-2" message={errors.email} />
@@ -85,7 +83,7 @@ export default function UpdateProfileInformation({ mustVerifyEmail, status, clas
                 )}
 
                 <div className="flex items-center gap-4">
-                    <PrimaryButton processing={processing}>Save</PrimaryButton>
+                    <Button type="submit" size="sm" color="indigo" disabled={processing}>Save</Button>
 
                     <Transition
                         show={recentlySuccessful}

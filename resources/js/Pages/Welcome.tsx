@@ -1,5 +1,7 @@
 import {Link, Head} from '@inertiajs/inertia-react';
 import React from "react";
+import route from "ziggy-js";
+
 
 interface IWelcomePageProps {
     auth: { user: any; };

@@ -57,7 +57,7 @@ export default function Login({status, canResetPassword}: ILoginProps) {
                            type="password"
                            name="password"
                            value={data.password}
-                           autoComplete="current-password"
+                           autoComplete="password"
                            onChange={onHandleChange}
                     />
 

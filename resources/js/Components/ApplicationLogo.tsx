@@ -2,11 +2,11 @@ import React from "react";
 import logo from "@/assets/logo_transparent.png";
 
 interface IApplicationLogo {
-    className: string
+    classes: string
 }
 
-export default function ApplicationLogo({className}: IApplicationLogo) {
+export default function ApplicationLogo({classes}: IApplicationLogo) {
     return (
-        <img src={logo} alt="Logo"  className="w-48 h-48 mx-auto"/>
+        <img src={logo} alt="Logo"  className={"mx-auto " + classes}/>
     );
 }
