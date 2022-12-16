@@ -3,8 +3,8 @@ import { Dialog, Transition } from '@headlessui/react';
 
 interface IModal extends PropsWithChildren{
     show: boolean
-    maxWidth: string
-    closeable: boolean
+    maxWidth?: string
+    closeable?: boolean
     onClose: () => void
 }
 

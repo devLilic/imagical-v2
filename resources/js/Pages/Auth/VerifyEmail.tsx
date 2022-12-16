@@ -1,11 +1,15 @@
 import GuestLayout from '@/Layouts/GuestLayout';
-import PrimaryButton from '@/Components/PrimaryButton';
 import { Head, Link, useForm } from '@inertiajs/inertia-react';
+import route from 'ziggy-js';
+import React, {FormEvent} from "react";
+import {Button} from "@material-tailwind/react";
 
-export default function VerifyEmail({ status }) {
+
+
+export default function VerifyEmail({ status }: {status: "verification-link-sent"}) {
     const { post, processing } = useForm();
 
-    const submit = (e) => {
+    const submit = (e: FormEvent) => {
         e.preventDefault();
 
         post(route('verification.send'));
@@ -28,7 +32,7 @@ export default function VerifyEmail({ status }) {
 
             <form onSubmit={submit}>
                 <div className="mt-4 flex items-center justify-between">
-                    <PrimaryButton processing={processing}>Resend Verification Email</PrimaryButton>
+                    <Button type="submit" disabled={processing}>Resend Verification Email</Button>
 
                     <Link
                         href={route('logout')}

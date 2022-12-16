@@ -6,3 +6,10 @@ interface IUser {
     created_at: Date
     updated_at: Date
 }
+
+interface IUserCredentials {
+    name: string
+    email: string
+    password: string
+    password_confirmation?: string
+}

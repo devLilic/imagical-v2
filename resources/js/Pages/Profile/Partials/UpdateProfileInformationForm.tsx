@@ -1,17 +1,20 @@
 import InputError from '@/Components/InputError';
-import InputLabel from '@/Components/InputLabel';
-import PrimaryButton from '@/Components/PrimaryButton';
 import { Link, useForm, usePage } from '@inertiajs/inertia-react';
 import { Transition } from '@headlessui/react';
 import route from "ziggy-js";
 import React, {FormEvent} from "react";
 import {Button, Input} from "@material-tailwind/react";
 
+interface IUpdateProfileInformation{
+    mustVerifyEmail: boolean
+    status: string
+    className: string
+}
 
+export default function UpdateProfileInformation({ mustVerifyEmail, status, className }: IUpdateProfileInformation) {
+    const user:  IUser = usePage().props.auth.user;
 
-export default function UpdateProfileInformation({ mustVerifyEmail, status, className }) {
-    const user = usePage().props.auth.user;
-
+    console.log(user)
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
         name: user.name,
         email: user.email,

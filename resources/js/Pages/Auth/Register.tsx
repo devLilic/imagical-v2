@@ -1,18 +1,21 @@
 import {ChangeEvent, FormEvent, useEffect} from 'react';
 import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
-import { Head, Link, useForm } from '@inertiajs/inertia-react';
+import {Head, Link, useForm} from '@inertiajs/inertia-react';
 import React from 'react';
 import {Button, Input} from "@material-tailwind/react";
 import route from "ziggy-js";
 
+const initialValues = {
+    name: '',
+    email: '',
+    password: '',
+    password_confirmation: '',
+}
+
 export default function Register() {
-    const { data, setData, post, processing, errors, reset } = useForm({
-        name: '',
-        email: '',
-        password: '',
-        password_confirmation: '',
-    });
+
+    const {data, setData, post, processing, errors, reset} = useForm(initialValues);
 
     useEffect(() => {
         return () => {
@@ -20,8 +23,11 @@ export default function Register() {
         };
     }, []);
 
-    const onHandleChange = (event: ChangeEvent<HTMLInputElement>):void => {
-        setData(event.target.name, event.target.type === 'checkbox' ? event.target.checked : event.target.value);
+    const onHandleChange = (event: ChangeEvent<HTMLInputElement>): void => {
+        let data = event.target.name as keyof typeof initialValues
+        event.target.type === 'checkbox' ?
+            setData(data, event.target.checked.toString()) :
+            setData(data, event.target.value)
     };
 
     const submit = (e: FormEvent): void => {
@@ -32,7 +38,7 @@ export default function Register() {
 
     return (
         <GuestLayout>
-            <Head title="Register" />
+            <Head title="Register"/>
 
             <form onSubmit={submit}>
                 <div>
@@ -46,7 +52,7 @@ export default function Register() {
                            required={true}
                     />
 
-                    <InputError message={errors.name} className="mt-2" />
+                    <InputError message={errors.name} className="mt-2"/>
                 </div>
 
                 <div className="mt-4">
@@ -60,7 +66,7 @@ export default function Register() {
                     />
 
 
-                    <InputError message={errors.email} className="mt-2" />
+                    <InputError message={errors.email} className="mt-2"/>
                 </div>
 
                 <div className="mt-4">
@@ -72,7 +78,7 @@ export default function Register() {
                            onChange={onHandleChange}
                     />
 
-                    <InputError message={errors.password} className="mt-2" />
+                    <InputError message={errors.password} className="mt-2"/>
                 </div>
 
                 <div className="mt-4">
@@ -86,7 +92,7 @@ export default function Register() {
                            required={true}
                     />
 
-                    <InputError message={errors.password_confirmation} className="mt-2" />
+                    <InputError message={errors.password_confirmation} className="mt-2"/>
                 </div>
 
                 <div className="flex items-center justify-end mt-4">

@@ -10,19 +10,15 @@ interface IResetPassword{
     email: string
 }
 
-interface FormData extends IResetPassword {
-    password: string
-    password_confirmation: string
-}
-
 export default function ResetPassword({ token, email }: IResetPassword) {
-    const defaultFormData: FormData = {
+    const initialValues = {
         token: token,
         email: email,
         password: '',
         password_confirmation: '',
     }
-    const { data, setData, post, processing, errors, reset } = useForm(defaultFormData);
+
+    const { data, setData, post, processing, errors, reset } = useForm(initialValues);
 
     useEffect(() => {
         return () => {
@@ -31,7 +27,8 @@ export default function ResetPassword({ token, email }: IResetPassword) {
     }, []);
 
     const onHandleChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setData(event.target.name, event.target.value);
+        let dataField = event.target.name as keyof typeof initialValues
+        setData(dataField, event.target.value);
     };
 
     const submit = (e: FormEvent) => {
