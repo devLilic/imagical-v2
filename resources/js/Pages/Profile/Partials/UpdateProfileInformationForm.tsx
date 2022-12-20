@@ -12,9 +12,9 @@ interface IUpdateProfileInformation{
 }
 
 export default function UpdateProfileInformation({ mustVerifyEmail, status, className }: IUpdateProfileInformation) {
+    // @ts-ignore
     const user:  IUser = usePage().props.auth.user;
 
-    console.log(user)
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm({
         name: user.name,
         email: user.email,

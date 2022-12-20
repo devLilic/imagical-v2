@@ -11,11 +11,14 @@ interface ILoginProps {
 }
 
 export default function Login({status, canResetPassword}: ILoginProps) {
-    const {data, setData, post, processing, errors, reset} = useForm({
+
+    const initialValues = {
         email: '',
         password: '',
         remember: '',
-    });
+    }
+
+    const {data, setData, post, processing, errors, reset} = useForm(initialValues);
 
     useEffect(() => {
         return () => {
@@ -24,7 +27,8 @@ export default function Login({status, canResetPassword}: ILoginProps) {
     }, []);
 
     const onHandleChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setData(event.target.name, event.target.type === 'checkbox' ? event.target.checked : event.target.value);
+        const fieldName = event.target.name as keyof typeof initialValues
+        setData(fieldName, event.target.type === 'checkbox' ? event.target.checked.toString() : event.target.value);
     };
 
     const submit = (e: FormEvent) => {

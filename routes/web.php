@@ -16,6 +16,11 @@ use Inertia\Inertia;
 |
 */
 
+Route::middleware('auth')->group(function (){
+    Route::get('titles', [TitlesController::class, 'index'])->name('titles');
+});
+
+
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),

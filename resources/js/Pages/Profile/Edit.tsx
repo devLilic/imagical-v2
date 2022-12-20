@@ -5,7 +5,15 @@ import UpdateProfileInformationForm from './Partials/UpdateProfileInformationFor
 import {Head} from '@inertiajs/inertia-react';
 import React from "react";
 
-export default function Edit({auth, mustVerifyEmail, status}) {
+interface IEdit {
+    auth: {
+        user: IUser
+    }
+    mustVerifyEmail: boolean
+    status: string
+}
+
+export default function Edit({auth, mustVerifyEmail, status}: IEdit) {
     return (
         <AuthenticatedLayout
             auth={auth}

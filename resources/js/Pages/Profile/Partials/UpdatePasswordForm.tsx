@@ -1,6 +1,5 @@
 import React, {FormEvent, useRef} from 'react';
 import InputError from '@/Components/InputError';
-import PrimaryButton from '@/Components/PrimaryButton';
 import {useForm} from '@inertiajs/inertia-react';
 import {Transition} from '@headlessui/react';
 import route from "ziggy-js";
