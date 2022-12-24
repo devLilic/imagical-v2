@@ -31,7 +31,7 @@ export default function Authenticated({auth, children}: Authenticated) {
 
                             <div className="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                                 <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                    Workspace
+                                    Dashboard
                                 </NavLink>
                             </div>
                         </div>
@@ -42,7 +42,6 @@ export default function Authenticated({auth, children}: Authenticated) {
                                     <MenuHandler>
                                         <Button variant="text" className="flex justify-between">
                                             {auth.user.name}
-
                                             <svg
                                                 className="ml-2 -mr-0.5 h-4 w-4"
                                                 xmlns="http://www.w3.org/2000/svg"
