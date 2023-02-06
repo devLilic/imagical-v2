@@ -24,5 +24,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request)
 Route::middleware('auth:sanctum')->prefix('v1')->group(function ()
 {
     Route::resource('playlists', PlaylistController::class)
+        ->only(['index', 'destroy'])
         ->missing(fn (Request $request) => response()->json(['data' => ['message' => "Playlist not Found"]]));
 });

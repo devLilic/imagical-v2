@@ -2,11 +2,9 @@
 
 namespace Tests\Feature;
 
-use App\Http\Resources\V1\PlaylistResource;
 use App\Models\Playlist;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Tests\TestCase;
 
@@ -77,7 +75,7 @@ class PlaylistTest extends TestCase {
         $this->userInstance()
             ->get("/api/v1/playlists/1")
             ->assertJsonFragment([
-                'data'=> [
+                'data' => [
                     'message' => 'Playlist not Found'
                 ]
             ]);
@@ -88,8 +86,16 @@ class PlaylistTest extends TestCase {
     {
         $playlist = Playlist::factory()->create();
 
-        $this->userInstance()
-            ->delete("/api/v1/playlists/{$playlist->id}");
+        $this->assertDatabaseHas('playlists', ['id'=>$playlist->id]);
+
+        $this->userInstance()->delete("/api/v1/playlists/{$playlist->id}")
+            ->assertJsonFragment([
+                'data' => [
+                    'message' => 'Playlist was deleted'
+                ]
+            ]);
+
+        $this->assertDatabaseMissing('playlists', ['id'=>$playlist->id]);
     }
 
     protected function userInstance(): PlaylistTest

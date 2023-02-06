@@ -23,7 +23,7 @@ const PlaylistItem = ({playlist}: IPlaylistItem) => {
 
             <div className='flex items-center'>
                 <a className='border border-blue-600 px-2 py-0 rounded hover:bg-blue-400 hover:text-white'
-                   href="#">Deschide</a>
+                   href={`/playlists/` + playlist.id}>Deschide</a>
             </div>
         </li>
     );

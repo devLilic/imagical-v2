@@ -23,7 +23,7 @@ const PlaylistFirstItem = ({playlist}: IPlaylistFirstItem) => {
 
             <div className='flex items-center w-full justify-around'>
                 <a className='px-2 py-0 rounded hover:underline'
-                   href="#">Deschide</a>
+                   href={`/playlists/` + playlist.id}>Open</a>
                 <Button className={"px-2 mx-2"}
                         color={'red'}
                         size={'sm'}
